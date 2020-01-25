@@ -10,12 +10,8 @@ router.post('/register', async (req, res, next) => {
     user.password = hash;
 
     try {
-        const newUser = await userModel.add(user)
-        const token = generateToken(newUser)
-        res.status(201).json({
-            user: newUser,
-            token
-        })
+        const newUser = await userModel.add(user)       
+        res.status(201).json(newUser)
     } catch(err) {
         res.status(500).json(err)
         next(err)
@@ -25,7 +21,7 @@ router.post('/register', async (req, res, next) => {
 router.post('/login', (req, res) => {
     let { username, password } = req.body;
   
-    Users.findBy({ username })
+    userModel.findBy({ username })
       .first()
       .then(user => {
         if (user && bcrypt.compareSync(password, user.password)) {

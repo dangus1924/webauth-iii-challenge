@@ -9,12 +9,17 @@ function find() {
     return db('users').select('username', 'password', 'department');
 }
 
+function findBy(filter) {
+    return db('users').where(filter);
+  }
+
 function findById(id) {
-    return db('user').where(id)
+    return db('users').where(id)
 }
 
 module.exports = {
     add,
     find,
+    findBy,
     findById,
 }
